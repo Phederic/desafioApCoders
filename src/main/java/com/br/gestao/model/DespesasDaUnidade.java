@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,7 +20,8 @@ public class DespesasDaUnidade {
 	private String descricao;
 	private BigDecimal valor;
 	private LocalDate vencimentoFatura;
-	private LocalDate statusPagamento;
+	@Enumerated(EnumType.STRING)
+	private StatusPagamento statusPagamento;
 	
 	@Override
 	public int hashCode() {
@@ -69,12 +72,15 @@ public class DespesasDaUnidade {
 	public void setVencimentoFatura(LocalDate vencimentoFatura) {
 		this.vencimentoFatura = vencimentoFatura;
 	}
-	public LocalDate getStatusPagamento() {
+
+	public StatusPagamento getStatusPagamento() {
 		return statusPagamento;
 	}
-	public void setStatusPagamento(LocalDate statusPagamento) {
+
+	public void setStatusPagamento(StatusPagamento statusPagamento) {
 		this.statusPagamento = statusPagamento;
 	}
+	
 
 	
 	
