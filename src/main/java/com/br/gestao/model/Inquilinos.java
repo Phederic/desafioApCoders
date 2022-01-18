@@ -84,8 +84,7 @@ public class Inquilinos {
 		this.email = email;
 	}
 
-	   dasds
-	
+	  
 	
 	
 	
