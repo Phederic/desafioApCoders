@@ -1,6 +1,7 @@
 package com.br.gestao.controller;
 
 import java.net.URI;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,4 +51,14 @@ public class InquilinosController {
 		URI uri = uriBuilder.path("/inquilinos/{id}").buildAndExpand(inquilinos.getId()).toUri();
 		return ResponseEntity.created(uri).body(new InquilinosDto(inquilinos));
 	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<InquilinosDto> detalhar(@PathVariable Integer id){
+		Optional<Inquilinos> inquilinos = inquilinosRepository.findById(id);
+		if(inquilinos.isPresent()) {
+			return ResponseEntity.ok(new InquilinosDto(inquilinos.get()));
+		}
+		return ResponseEntity.notFound().build();
+	}
+	
 }
