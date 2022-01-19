@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -14,8 +13,7 @@ public class Unidades {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String identificacao;
-	@ManyToOne
-	private Inquilinos nome;
+	private String propietario;
 	private String condominio;
 	@OneToOne
 	private Endereco endereco;
@@ -25,7 +23,7 @@ public class Unidades {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
+		return result; 
 	}
 
 	@Override
@@ -61,14 +59,6 @@ public class Unidades {
 		this.identificacao = identificacao;
 	}
 
-	public Inquilinos getNome() {
-		return nome;
-	}
-
-	public void setNome(Inquilinos nome) {
-		this.nome = nome;
-	}
-
 	public String getCondominio() {
 		return condominio;
 	}
@@ -85,4 +75,14 @@ public class Unidades {
 		this.endereco = endereco;
 	}
 
+	public String getPropietario() {
+		return propietario;
+	}
+
+	public void setPropietario(String propietario) {
+		this.propietario = propietario;
+	}
+	
+
+	
 }

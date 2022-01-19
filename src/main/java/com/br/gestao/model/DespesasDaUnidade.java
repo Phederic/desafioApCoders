@@ -109,4 +109,6 @@ public class DespesasDaUnidade {
 		this.unidades = unidades;
 	}
 
+	public DespesasDaUnidade() {
+	}
 }

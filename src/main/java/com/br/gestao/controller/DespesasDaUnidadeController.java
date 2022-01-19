@@ -26,7 +26,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.br.gestao.dto.DespesasDaUnidadeDto;
 import com.br.gestao.form.DespesasDaUnidadeForm;
 import com.br.gestao.model.DespesasDaUnidade;
-import com.br.gestao.model.Unidades;
 import com.br.gestao.repository.DespesasDaUnidadeRepository;
 
 @RestController
@@ -40,7 +39,7 @@ public class DespesasDaUnidadeController {
 	@GetMapping
 	@Cacheable(value = "listaDeDespesas")
 	public Page<DespesasDaUnidadeDto> lista(
-			@PageableDefault(sort = "id", direction = Direction.ASC, page = 0, size = 10) Pageable paginacao, Unidades unidades){
+			@PageableDefault(sort = "id", direction = Direction.ASC, page = 0, size = 10) Pageable paginacao){
 			Page<DespesasDaUnidade> despesas = despesasDaUnidadeRepository.findAll(paginacao);
 			return DespesasDaUnidadeDto.converter(despesas);
 	
@@ -68,7 +67,7 @@ public class DespesasDaUnidadeController {
 	
 	@DeleteMapping("/{id}")
 	@Transactional
-	@CacheEvict(value = "listaDeInquilinos", allEntries = true)
+	@CacheEvict(value = "listaDeDespesas", allEntries = true)
 	public ResponseEntity<DespesasDaUnidadeDto> deletar(@PathVariable Integer id){
 		Optional<DespesasDaUnidade> despesas = despesasDaUnidadeRepository.findById(id);
 		if(despesas.isPresent()) {
