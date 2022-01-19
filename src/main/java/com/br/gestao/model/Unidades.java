@@ -82,7 +82,16 @@ public class Unidades {
 	public void setPropietario(String propietario) {
 		this.propietario = propietario;
 	}
-	
 
+	public Unidades(Integer id, String identificacao, String propietario, String condominio, Endereco endereco) {
+		this.id = id;
+		this.identificacao = identificacao;
+		this.propietario = propietario;
+		this.condominio = condominio;
+		this.endereco = endereco;
+	}
+	public Unidades() {
+	}
+	
 	
 }

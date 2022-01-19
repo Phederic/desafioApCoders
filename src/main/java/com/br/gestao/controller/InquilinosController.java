@@ -25,10 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.br.gestao.dto.InquilinosDto;
-import com.br.gestao.dto.InquilinosDto;
 import com.br.gestao.form.AtualizacaoInquilinosForm;
 import com.br.gestao.form.InquilinosForm;
-import com.br.gestao.model.Inquilinos;
 import com.br.gestao.model.Inquilinos;
 import com.br.gestao.repository.InquilinosRepository;
 
