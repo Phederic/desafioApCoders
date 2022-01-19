@@ -18,12 +18,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.br.gestao.dto.DespesasDaUnidadeDto;
+import com.br.gestao.form.AtualizacaoDespesaDeUnidadeForm;
 import com.br.gestao.form.DespesasDaUnidadeForm;
 import com.br.gestao.model.DespesasDaUnidade;
 import com.br.gestao.repository.DespesasDaUnidadeRepository;
@@ -76,4 +78,18 @@ public class DespesasDaUnidadeController {
 		}
 		return ResponseEntity.notFound().build();
 	}
+	
+	
+	@PutMapping("/{id}")
+	@Transactional
+	public ResponseEntity<DespesasDaUnidadeDto> atualizar(@PathVariable Integer id,
+			@RequestBody @Valid AtualizacaoDespesaDeUnidadeForm form) {
+		Optional<DespesasDaUnidade> despesasAtt = despesasDaUnidadeRepository.findById(id);
+		if (despesasAtt.isPresent()) {
+			DespesasDaUnidade despesas = form.atualizar(id, despesasDaUnidadeRepository);
+			return ResponseEntity.ok(new DespesasDaUnidadeDto(despesas));
+		}
+		return ResponseEntity.notFound().build();
+	}
+	
 }

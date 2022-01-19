@@ -18,13 +18,17 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.br.gestao.dto.InquilinosDto;
+import com.br.gestao.dto.InquilinosDto;
+import com.br.gestao.form.AtualizacaoInquilinosForm;
 import com.br.gestao.form.InquilinosForm;
+import com.br.gestao.model.Inquilinos;
 import com.br.gestao.model.Inquilinos;
 import com.br.gestao.repository.InquilinosRepository;
 
@@ -42,35 +46,50 @@ public class InquilinosController {
 		Page<Inquilinos> inquilinos = inquilinosRepository.findAll(paginacao);
 		return InquilinosDto.converter(inquilinos);
 	}
+
 	@PostMapping
 	@Transactional
 	@CacheEvict(value = "listaDeInquilinos", allEntries = true)
-	public ResponseEntity<InquilinosDto> cadastrar(@RequestBody @Valid InquilinosForm form, UriComponentsBuilder uriBuilder){
+	public ResponseEntity<InquilinosDto> cadastrar(@RequestBody @Valid InquilinosForm form,
+			UriComponentsBuilder uriBuilder) {
 		Inquilinos inquilinos = form.converter();
 		inquilinosRepository.save(inquilinos);
-		
+
 		URI uri = uriBuilder.path("/inquilinos/{id}").buildAndExpand(inquilinos.getId()).toUri();
 		return ResponseEntity.created(uri).body(new InquilinosDto(inquilinos));
 	}
-	
+
 	@GetMapping("/{id}")
-	public ResponseEntity<InquilinosDto> detalhar(@PathVariable Integer id){
+	public ResponseEntity<InquilinosDto> detalhar(@PathVariable Integer id) {
 		Optional<Inquilinos> inquilinos = inquilinosRepository.findById(id);
-		if(inquilinos.isPresent()) {
+		if (inquilinos.isPresent()) {
 			return ResponseEntity.ok(new InquilinosDto(inquilinos.get()));
 		}
 		return ResponseEntity.notFound().build();
 	}
-	
+
 	@DeleteMapping("/{id}")
 	@Transactional
 	@CacheEvict(value = "listaDeInquilinos", allEntries = true)
-	public ResponseEntity<InquilinosDto> deletar(@PathVariable Integer id){
+	public ResponseEntity<InquilinosDto> deletar(@PathVariable Integer id) {
 		Optional<Inquilinos> inquilinos = inquilinosRepository.findById(id);
-		if(inquilinos.isPresent()) {
+		if (inquilinos.isPresent()) {
 			inquilinosRepository.deleteById(id);
 			return ResponseEntity.ok().build();
 		}
 		return ResponseEntity.notFound().build();
 	}
+
+	@PutMapping("/{id}")
+	@Transactional
+	public ResponseEntity<InquilinosDto> atualizar(@PathVariable Integer id,
+			@RequestBody @Valid AtualizacaoInquilinosForm form) {
+		Optional<Inquilinos> inquilinosAtt = inquilinosRepository.findById(id);
+		if (inquilinosAtt.isPresent()) {
+			Inquilinos inquilinos = form.atualizar(id, inquilinosRepository);
+			return ResponseEntity.ok(new InquilinosDto(inquilinos));
+		}
+		return ResponseEntity.notFound().build();
+	}
+
 }
