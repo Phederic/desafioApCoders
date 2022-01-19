@@ -99,4 +99,17 @@ public class Endereco {
 		this.numero = numero;
 	}
 
+	public Endereco() {
+	}
+
+	public Endereco(Integer id, String estado, String cidade, String cep, String bairro, String rua, String numero) {
+		this.id = id;
+		this.estado = estado;
+		this.cidade = cidade;
+		this.cep = cep;
+		this.bairro = bairro;
+		this.rua = rua;
+		this.numero = numero;
+	}
+
 }

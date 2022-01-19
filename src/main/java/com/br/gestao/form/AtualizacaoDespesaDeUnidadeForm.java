@@ -16,26 +16,31 @@ public class AtualizacaoDespesaDeUnidadeForm {
 	private LocalDate vencimentoFatura;
 	private StatusPagamento statusPagamento;
 	private Unidades unidades;
+
 	public Integer getId() {
 		return id;
 	}
+
 	public String getDescricao() {
 		return descricao;
 	}
+
 	public BigDecimal getValor() {
 		return valor;
 	}
+
 	public LocalDate getVencimentoFatura() {
 		return vencimentoFatura;
 	}
+
 	public StatusPagamento getStatusPagamento() {
 		return statusPagamento;
 	}
+
 	public Unidades getUnidades() {
 		return unidades;
 	}
-	
-	
+
 	public DespesasDaUnidade atualizar(Integer id, DespesasDaUnidadeRepository despesasDaUnidadeRepository) {
 		DespesasDaUnidade despesas = despesasDaUnidadeRepository.getById(id);
 		despesas.setDescricao(this.descricao);
@@ -45,7 +50,5 @@ public class AtualizacaoDespesaDeUnidadeForm {
 		despesas.setUnidades(this.unidades);
 		return despesas;
 	}
-	
-	
-	
+
 }
